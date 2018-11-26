@@ -10,8 +10,8 @@ var MAX_GUESTS = 5;
 var MIN_PRICE = 1000;
 var MAX_PRICE = 1000000;
 
-var MIN_X = 0;
-var MAX_X = 0;
+var MIN_X = 1;
+var MAX_X = 1200;
 
 var MIN_Y = 130;
 var MAX_Y = 630;
@@ -26,6 +26,9 @@ var realtorsList = [];
 
 var tokyoMap = document.querySelector('.map');
 tokyoMap.classList.remove('map--faded');
+var pinMapTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var pinAvatar = pinMapTemplate.querySelector('img');
+var pinPlace = document.querySelector('.map__pins');
 
 // Возвращает случайное число из диапазона
 var getRandomInRange = function (min, max) {
@@ -45,7 +48,7 @@ var createRealtor = function () {
     var locationX = getRandomInRange(MIN_X, MAX_X);
     var locationY = getRandomInRange(MIN_Y, MAX_Y);
 
-    realtorsList[i] = [
+    realtorsList[i] =
       {
         'autors': {
           'avatar': 'img/avatars/user0' + getRandomInRange(1, 8) + '.png'
@@ -61,15 +64,23 @@ var createRealtor = function () {
           'checkout': getRandomElementFromArray(LIST_TIME),
           'features': getRandomElementFromArray(LIST_FEATURES),
           'description': '',
-          'photos': getRandomElementFromArray(LIST_PHOTOS)
+          'photos': LIST_PHOTOS
         },
         'location': {
           'x': locationX,
           'y': locationY
         }
       }
-    ];
   }
 };
 
 createRealtor();
+
+for (var i = 0; i < realtorsList.length; i++) {
+  var pinElement = pinMapTemplate.cloneNode(true);
+  pinPlace.appendChild(pinElement);
+  pinMapTemplate.style.left = realtorsList[i].location.x + 'px';
+  pinMapTemplate.style.top = realtorsList[i].location.y + 'px';
+  pinAvatar.src = realtorsList[i].autors.avatar;
+  pinAvatar.alt = realtorsList[i].offer.title;
+}
