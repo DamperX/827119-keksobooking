@@ -48,8 +48,7 @@ var createRealtor = function () {
     var locationX = getRandomInRange(MIN_X, MAX_X);
     var locationY = getRandomInRange(MIN_Y, MAX_Y);
 
-    realtorsList[i] =
-      {
+    realtorsList[i] = {
         'autors': {
           'avatar': 'img/avatars/user0' + getRandomInRange(1, 8) + '.png'
         },
@@ -74,13 +73,26 @@ var createRealtor = function () {
   }
 };
 
-createRealtor();
-
-for (var i = 0; i < realtorsList.length; i++) {
+var createPin = function (realtor) {
   var pinElement = pinMapTemplate.cloneNode(true);
-  pinPlace.appendChild(pinElement);
-  pinMapTemplate.style.left = realtorsList[i].location.x + 'px';
-  pinMapTemplate.style.top = realtorsList[i].location.y + 'px';
-  pinAvatar.src = realtorsList[i].autors.avatar;
-  pinAvatar.alt = realtorsList[i].offer.title;
-}
+
+  pinMapTemplate.style.left = realtor.location.x + 'px';
+  pinMapTemplate.style.top = realtor.location.y + 'px';
+  pinAvatar.src = realtor.autors.avatar;
+  pinAvatar.alt = realtor.offer.title;
+
+  return pinElement;
+};
+
+var includePinOnMap = function () {
+  var fragment = document.createDocumentFragment();
+
+  for (var i = 0; i < realtorsList.length; i++) {
+    fragment.appendChild(createPin(realtorsList[i]));
+  }
+
+  pinPlace.appendChild(fragment);
+};
+
+createRealtor();
+includePinOnMap();
