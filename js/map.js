@@ -73,7 +73,10 @@ var createRealtor = function () {
       }
     };
   }
+  return realtorsList;
 };
+
+createRealtor();
 
 var createPin = function (realtor) {
   var pinElement = pinMapTemplate.cloneNode(true);
@@ -86,43 +89,34 @@ var createPin = function (realtor) {
   return pinElement;
 };
 
-var includePinOnMap = function () {
-  var pinFragment = document.createDocumentFragment();
-
-  for (var i = 0; i < realtorsList.length; i++) {
-    pinFragment.appendChild(createPin(realtorsList[i]));
+var getHouseType = function (type) {
+  if (type === 'flat') {
+    return 'Квартира';
+  } else if (type === 'bungalo') {
+    return 'Бунгало';
+  } else if (type === 'palace') {
+    return 'Дворец';
+  } else {
+    return 'Дом';
   }
-
-  pinPlace.appendChild(pinFragment);
 };
 
-var createAnnouncementOnMap = function (notice) {
+var createNoticetOnMap = function (notice) {
   var noticeElement = modalAdTemplate.cloneNode(true);
 
   noticeElement.querySelector('.popup__title').textContent = notice.offer.title;
   noticeElement.querySelector('.popup__text--address').textContent = notice.offer.adress;
   noticeElement.querySelector('.popup__text--price').textContent = notice.offer.price + '₽/ночь';
   noticeElement.querySelector('.popup__description').textContent = notice.offer.description;
-  noticeElement('.popup__avatar').src = notice.author.avatar;
-
-  var houseElement = document.querySelector('.popup__type');
-  if (notice.offer.type === 'flat') {
-    houseElement.textContent = 'Квартира';
-  } else if (notice.offer.offer === 'bungalo') {
-    houseElement.textContent = 'Бунгало';
-  } else if (notice.offer.offer === 'palace') {
-    houseElement.textContent = 'Дворец';
-  } else {
-    houseElement.textContent = 'Дом';
-  }
-
+  noticeElement.querySelector('.popup__avatar').src = notice.author.avatar;
+  noticeElement.querySelector('.popup__type').textContent = getHouseType(notice.offer.type);
   noticeElement.querySelector('.popup__text--capacity').textContent = notice.offer.rooms + 'комнаты для' + notice.offer.guests + 'гостей';
   noticeElement.querySelector('.popup__text--time').textContent = 'Заезд после' + notice.offer.checkin + ', выезд до' + notice.offer.checkout;
 
   var featuresElements = noticeElement.querySelector('.popup__features');
-  for (var i = 0; i < notice.offer.features.length; i++) {
+  for (var t = 0; t < notice.offer.features.length; t++) {
     var pinFeature = document.createElement('li');
-    pinFeature.classList.add('popup__feature popup__feature--' + realtorsList.offer.features[i]);
+    pinFeature.classList = 'popup__feature popup__feature--' + notice.offer.features[t];
     featuresElements.appendChild(pinFeature);
   }
 
@@ -137,16 +131,25 @@ var createAnnouncementOnMap = function (notice) {
   return noticeElement;
 };
 
-var includeAnnouncementOnMap = function () {
-  var announcementFragment = document.createDocumentFragment();
+var includePinOnMap = function () {
+  var pinFragment = document.createDocumentFragment();
 
   for (var i = 0; i < realtorsList.length; i++) {
-    announcementFragment.appendChild(createAnnouncementOnMap(realtorsList[i]));
+    pinFragment.appendChild(createPin(realtorsList[i]));
   }
-  mapContainer.insertBefore(announcementFragment);
+
+  pinPlace.appendChild(pinFragment);
 };
 
-createRealtor();
 includePinOnMap();
-createAnnouncementOnMap();
-includeAnnouncementOnMap();
+
+var includeNoticeOnMap = function () {
+  var noticeFragment = document.createDocumentFragment();
+
+  for (var i = 0; i < realtorsList.length; i++) {
+    noticeFragment.appendChild(createNoticetOnMap(realtorsList[i]));
+  }
+  tokyoMap.insertBefore(createNoticetOnMap(realtorsList[0]), mapContainer);
+};
+
+includeNoticeOnMap();
