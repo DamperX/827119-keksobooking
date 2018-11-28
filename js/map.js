@@ -58,9 +58,6 @@ var getMixArray = function (array) {
   return array;
 };
 
-// Возвтращает массив случайной длины
-
-
 var createRealtor = function () {
   for (var i = 0; i < REALTORS_COUNT; i++) {
 
@@ -107,14 +104,15 @@ var createPin = function (realtor) {
 };
 
 var getHouseType = function (type) {
-  if (type === 'flat') {
-    return 'Квартира';
-  } else if (type === 'bungalo') {
-    return 'Бунгало';
-  } else if (type === 'palace') {
-    return 'Дворец';
-  } else {
-    return 'Дом';
+  switch (type) {
+    case 'flat':
+      return 'Квартира';
+    case 'bungalo':
+      return 'Бунгало';
+    case 'palace':
+      return 'Дворец';
+    default:
+      return 'Дом';
   }
 };
 
