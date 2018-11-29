@@ -31,12 +31,13 @@ var listPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://
 var realtorsList = [];
 
 var tokyoMap = document.querySelector('.map');
-tokyoMap.classList.remove('map--faded');
 var pinMapTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var mainPin = tokyoMap.querySelector('.map__pin--main');
 var pinAvatar = pinMapTemplate.querySelector('img');
 var pinPlace = document.querySelector('.map__pins');
 var modalAdTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var mapContainer = document.querySelector('.map__filters-container');
+var adForm = document.querySelector('.ad-form');
 
 // Возвращает случайное число из диапазона
 var getRandomInRange = function (min, max) {
@@ -168,10 +169,39 @@ var renderPinsOnMap = function () {
   pinPlace.appendChild(pinFragment);
 };
 
-renderPinsOnMap();
-
 var includeNoticeOnMap = function () {
   tokyoMap.insertBefore(createNoticetOnMap(realtorsList[0]), mapContainer);
 };
 
 includeNoticeOnMap();
+
+
+// Показывает карту
+var deleteMapFaded = function () {
+  tokyoMap.classList.remove('map--faded');
+};
+
+// Показывает форму объявления
+var showForm = function () {
+  adForm.classList.remove('ad-form--disabled');
+};
+
+// Переключает активацю формы
+var switchFieldset = function (boolean) {
+  var fieldset = document.querySelectorAll('fieldset');
+  for (var i = 0; i < fieldset.length; i++) {
+    fieldset[i].disabled = boolean;
+  }
+};
+
+// Показывает интерфейс
+var showInterface = function () {
+  deleteMapFaded();
+  showForm();
+  renderPinsOnMap();
+  switchFieldset(false);
+};
+
+mainPin.addEventListener('mouseup', showInterface);
+
+hideInterface();
