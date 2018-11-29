@@ -61,7 +61,7 @@ var getMixArray = function (array) {
   return array;
 };
 
-var createRealtors = function () {
+var createAd = function () {
   for (var i = 0; i < REALTORS_COUNT; i++) {
 
     var locationX = getRandomInRange(MIN_X, MAX_X);
@@ -93,7 +93,7 @@ var createRealtors = function () {
   return realtorsList;
 };
 
-createRealtors();
+createAd();
 
 var createPin = function (realtor) {
   var pinElement = pinMapTemplate.cloneNode(true);
