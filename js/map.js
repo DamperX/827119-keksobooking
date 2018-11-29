@@ -19,11 +19,14 @@ var MAX_Y = 630;
 var PHOTO_WIDTH = '40';
 var PHOTO_HEIGHT = '40';
 
-var LIST_TITLE = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
-var LIST_PRICE = ['palace', 'flat', 'house', 'bungalo'];
-var LIST_TIME = ['12:00', '13:00', '14:00'];
-var LIST_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var LIST_PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var PIN_WIDTH = '50';
+var PIN_HEIGHT = '70';
+
+var listTitle = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+var listPrice = ['palace', 'flat', 'house', 'bungalo'];
+var listTime = ['12:00', '13:00', '14:00'];
+var listFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var listPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
 var realtorsList = [];
 
@@ -58,7 +61,7 @@ var getMixArray = function (array) {
   return array;
 };
 
-var createRealtor = function () {
+var createRealtors = function () {
   for (var i = 0; i < REALTORS_COUNT; i++) {
 
     var locationX = getRandomInRange(MIN_X, MAX_X);
@@ -69,17 +72,17 @@ var createRealtor = function () {
         'avatar': 'img/avatars/user0' + (i + 1) + '.png'
       },
       'offer': {
-        'title': getRandomElementFromArray(LIST_TITLE),
+        'title': getRandomElementFromArray(listTitle),
         'address': locationX + ', ' + locationY,
         'price': getRandomInRange(MIN_PRICE, MAX_PRICE),
-        'type': getRandomElementFromArray(LIST_PRICE),
+        'type': getRandomElementFromArray(listPrice),
         'rooms': getRandomInRange(MIN_ROOMS, MAX_ROOMS),
         'guests': getRandomInRange(MIN_GUESTS, MAX_GUESTS),
-        'checkin': getRandomElementFromArray(LIST_TIME),
-        'checkout': getRandomElementFromArray(LIST_TIME),
-        'features': LIST_FEATURES,
+        'checkin': getRandomElementFromArray(listTime),
+        'checkout': getRandomElementFromArray(listTime),
+        'features': listFeatures,
         'description': '',
-        'photos': getMixArray(LIST_PHOTOS)
+        'photos': getMixArray(listPhotos)
       },
       'location': {
         'x': locationX,
@@ -90,13 +93,13 @@ var createRealtor = function () {
   return realtorsList;
 };
 
-createRealtor();
+createRealtors();
 
 var createPin = function (realtor) {
   var pinElement = pinMapTemplate.cloneNode(true);
 
-  pinMapTemplate.style.left = realtor.location.x + 'px';
-  pinMapTemplate.style.top = realtor.location.y + 'px';
+  pinMapTemplate.style.left = realtor.location.x - PIN_WIDTH + 'px';
+  pinMapTemplate.style.top = realtor.location.y - PIN_HEIGHT + 'px';
   pinAvatar.src = realtor.author.avatar;
   pinAvatar.alt = realtor.offer.title;
 
@@ -128,29 +131,34 @@ var createNoticetOnMap = function (notice) {
   noticeElement.querySelector('.popup__text--capacity').textContent = notice.offer.rooms + ' комнаты для ' + notice.offer.guests + ' гостей';
   noticeElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + notice.offer.checkin + ', выезд до ' + notice.offer.checkout;
 
-  var featuresElements = noticeElement.querySelector('.popup__features');
-  featuresElements.innerHTML = '';
-  for (var t = 0; t < notice.offer.features.length; t++) {
-    var pinFeature = document.createElement('li');
-    pinFeature.classList = 'popup__feature popup__feature--' + notice.offer.features[t];
-    featuresElements.appendChild(pinFeature);
-  }
+  var featuresList = noticeElement.querySelector('.popup__features');
+  featuresList.innerHTML = '';
+  var featuresFragment = document.createDocumentFragment();
+  for (var k = 0; k < notice.offer.features.length; k++) {
+    var featureElement = document.createElement('li');
 
-  var photosElement = noticeElement.querySelector('.popup__photos');
-  photosElement.innerHTML = '';
-  for (var j = 0; j < notice.offer.photos.length; j++) {
-    var pinPhoto = document.createElement('img');
-    pinPhoto.classList.add('.popup__photo');
-    pinPhoto.src = notice.offer.photos[j];
-    pinPhoto.width = PHOTO_WIDTH;
-    pinPhoto.height = PHOTO_HEIGHT;
-    photosElement.appendChild(pinPhoto);
+    featureElement.classList = 'popup__feature popup__feature--' + notice.offer.features[k];
+    featuresFragment.appendChild(featureElement);
   }
+  featuresList.appendChild(featuresFragment);
+
+  var photosList = noticeElement.querySelector('.popup__photos');
+  photosList.innerHTML = '';
+  var photosFragment = document.createDocumentFragment();
+  for (var j = 0; j < notice.offer.photos.length; j++) {
+    var photoElement = document.createElement('img');
+    photoElement.classList.add('.popup__photo');
+    photoElement.src = notice.offer.photos[j];
+    photoElement.width = PHOTO_WIDTH;
+    photoElement.height = PHOTO_HEIGHT;
+    photosFragment.appendChild(photoElement);
+  }
+  photosList.appendChild(photosFragment);
 
   return noticeElement;
 };
 
-var includePinOnMap = function () {
+var renderPinsOnMap = function () {
   var pinFragment = document.createDocumentFragment();
 
   for (var i = 0; i < realtorsList.length; i++) {
@@ -160,14 +168,9 @@ var includePinOnMap = function () {
   pinPlace.appendChild(pinFragment);
 };
 
-includePinOnMap();
+renderPinsOnMap();
 
 var includeNoticeOnMap = function () {
-  var noticeFragment = document.createDocumentFragment();
-
-  for (var i = 0; i < realtorsList.length; i++) {
-    noticeFragment.appendChild(createNoticetOnMap(realtorsList[i]));
-  }
   tokyoMap.insertBefore(createNoticetOnMap(realtorsList[0]), mapContainer);
 };
 
