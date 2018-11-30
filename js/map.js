@@ -22,6 +22,8 @@ var PHOTO_HEIGHT = '40';
 var PIN_WIDTH = '50';
 var PIN_HEIGHT = '70';
 
+var ESC_KEYCODE = 27;
+
 var listTitle = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 var listPrice = ['palace', 'flat', 'house', 'bungalo'];
 var listTime = ['12:00', '13:00', '14:00'];
@@ -38,6 +40,11 @@ var pinPlace = document.querySelector('.map__pins');
 var modalAdTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var mapContainer = document.querySelector('.map__filters-container');
 var adForm = document.querySelector('.ad-form');
+var mapFilters = mapContainer.querySelector('.map__filters');
+var formFieldset = document.querySelectorAll('fieldset');
+var formSelect = document.querySelectorAll('select');
+var mapOverlay = pinPlace.querySelector('.map__overlay');
+var adressInput = adForm.querySelector('#address');
 
 // Возвращает случайное число из диапазона
 var getRandomInRange = function (min, max) {
@@ -173,9 +180,6 @@ var includeNoticeOnMap = function () {
   tokyoMap.insertBefore(createNoticetOnMap(realtorsList[0]), mapContainer);
 };
 
-includeNoticeOnMap();
-
-
 // Показывает карту
 var deleteMapFaded = function () {
   tokyoMap.classList.remove('map--faded');
@@ -187,10 +191,19 @@ var showForm = function () {
 };
 
 // Переключает активацю формы
-var switchFieldset = function (boolean) {
-  var fieldset = document.querySelectorAll('fieldset');
-  for (var i = 0; i < fieldset.length; i++) {
-    fieldset[i].disabled = boolean;
+var switchForm = function (tag, boolean) {
+  for (var i = 0; i < tag.length; i++) {
+    tag[i].disabled = boolean;
+  }
+};
+
+var switchDisable = function (bool) {
+  if (bool) {
+    switchForm(formFieldset, true);
+    switchForm(formSelect, true);
+  } else {
+    switchForm(formFieldset, false);
+    switchForm(formSelect, false);
   }
 };
 
@@ -199,9 +212,22 @@ var showInterface = function () {
   deleteMapFaded();
   showForm();
   renderPinsOnMap();
-  switchFieldset(false);
+  switchDisable(false);
+};
+// Скрывает интрефейс
+var hideInterface = function () {
+  switchDisable(true);
+};
+
+// Отображает координаты пина
+var setAddress = function () {
+  var fieldCoords = mainPin.getBoundingClientRect();
+  var coord = [fieldCoords.left, fieldCoords.top];
+  adressInput.value = coord;
 };
 
 mainPin.addEventListener('mouseup', showInterface);
 
 hideInterface();
+includeNoticeOnMap();
+setAddress();
