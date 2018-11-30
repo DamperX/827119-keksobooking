@@ -101,8 +101,6 @@ var createAd = function () {
   return realtorsList;
 };
 
-createAd();
-
 var createPin = function (realtor) {
   var pinElement = pinMapTemplate.cloneNode(true);
 
@@ -110,7 +108,14 @@ var createPin = function (realtor) {
   pinMapTemplate.style.top = realtor.location.y - PIN_HEIGHT + 'px';
   pinAvatar.src = realtor.author.avatar;
   pinAvatar.alt = realtor.offer.title;
-
+  pinElement.addEventListener('click', function () {
+    var mapCard = tokyoMap.querySelector('.map__card');
+    if (mapCard) {
+      mapCard.remove();
+    } else {
+      openPopup();
+    }
+  });
   return pinElement;
 };
 
@@ -166,10 +171,10 @@ var createNoticetOnMap = function (notice) {
   return noticeElement;
 };
 
-var renderPinsOnMap = function () {
+var renderPinsOnMap = function (pins) {
   var pinFragment = document.createDocumentFragment();
 
-  for (var i = 0; i < realtorsList.length; i++) {
+  for (var i = 0; i < pins.length; i++) {
     pinFragment.appendChild(createPin(realtorsList[i]));
   }
 
@@ -211,14 +216,16 @@ var switchDisable = function (bool) {
 var showInterface = function () {
   deleteMapFaded();
   showForm();
-  renderPinsOnMap();
+  renderPinsOnMap(realtorsList);
   switchDisable(false);
 };
+
 // Скрывает интрефейс
 var hideInterface = function () {
   switchDisable(true);
 };
 
+// Отрисовывает координаты пина
 var setAddress = function (evt) {
   var pinRect = mainPin.getBoundingClientRect();
   var bodyRect = document.body.getBoundingClientRect();
@@ -229,8 +236,31 @@ var setAddress = function (evt) {
   adressInput.value = offsetX + ', ' + offsetY;
 };
 
-mainPin.addEventListener('mouseup', showInterface);
+var pressEscClose = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
 
+var closePopup = function () {
+  if (tokyoMap.contains(tokyoMap.querySelector('.popup'))) {
+    tokyoMap.querySelector('.popup').remove('popup');
+    tokyoMap.querySelector('.map__pin--active').classList.remove('map__pin--active');
+  }
+}
+
+var openPopup = function () {
+  pinMapTemplate.classList.add('map__pin--active');
+  includeNoticeOnMap();
+  if (tokyoMap.contains(tokyoMap.querySelector('.popup'))) {
+    modalAdTemplate.remove();
+  }
+  var popupClose = document.querySelector('.popup__close');
+  popupClose.addEventListener('click', closePopup);
+  document.addEventListener('keydown', pressEscClose);
+}
+
+mainPin.addEventListener('mouseup', showInterface);
+createAd();
 hideInterface();
-includeNoticeOnMap();
 setAddress();
