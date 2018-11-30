@@ -219,11 +219,14 @@ var hideInterface = function () {
   switchDisable(true);
 };
 
-// Отображает координаты пина
-var setAddress = function () {
-  var fieldCoords = mainPin.getBoundingClientRect();
-  var coord = [fieldCoords.left, fieldCoords.top];
-  adressInput.value = coord;
+var setAddress = function (evt) {
+  var pinRect = mainPin.getBoundingClientRect();
+  var bodyRect = document.body.getBoundingClientRect();
+
+  var offsetX = pinRect.left - bodyRect.left + Math.round(mainPin.offsetWidth / 2);
+  var offsetY = pinRect.top - bodyRect.top + Math.round(mainPin.offsetHeight);
+
+  adressInput.value = offsetX + ', ' + offsetY;
 };
 
 mainPin.addEventListener('mouseup', showInterface);
