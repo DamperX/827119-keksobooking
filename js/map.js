@@ -40,10 +40,8 @@ var pinPlace = document.querySelector('.map__pins');
 var modalAdTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var mapContainer = document.querySelector('.map__filters-container');
 var adForm = document.querySelector('.ad-form');
-var mapFilters = mapContainer.querySelector('.map__filters');
 var formFieldset = document.querySelectorAll('fieldset');
 var formSelect = document.querySelectorAll('select');
-var mapOverlay = pinPlace.querySelector('.map__overlay');
 var adressInput = adForm.querySelector('#address');
 
 // Возвращает случайное число из диапазона
@@ -226,7 +224,7 @@ var hideInterface = function () {
 };
 
 // Отрисовывает координаты пина
-var setAddress = function (evt) {
+var setAddress = function () {
   var pinRect = mainPin.getBoundingClientRect();
   var bodyRect = document.body.getBoundingClientRect();
 
@@ -247,7 +245,7 @@ var closePopup = function () {
     tokyoMap.querySelector('.popup').remove('popup');
     tokyoMap.querySelector('.map__pin--active').classList.remove('map__pin--active');
   }
-}
+};
 
 var openPopup = function () {
   pinMapTemplate.classList.add('map__pin--active');
@@ -258,7 +256,7 @@ var openPopup = function () {
   var popupClose = document.querySelector('.popup__close');
   popupClose.addEventListener('click', closePopup);
   document.addEventListener('keydown', pressEscClose);
-}
+};
 
 mainPin.addEventListener('mouseup', showInterface);
 createAd();
