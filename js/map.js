@@ -213,7 +213,7 @@ var showInterface = function () {
 var hideInterface = function () {
   switchForm(formFieldsets, 'hide');
   switchForm(formSelects, 'hide');
-  deactivateForm()
+  deactivateForm();
 };
 
 // Отрисовывает координаты пина
