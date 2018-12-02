@@ -38,7 +38,6 @@ var realtorsList = [];
 var tokyoMap = document.querySelector('.map');
 var pinMapTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var mainPin = tokyoMap.querySelector('.map__pin--main');
-var pinAvatar = pinMapTemplate.querySelector('img');
 var pinPlace = document.querySelector('.map__pins');
 var modalAdTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var mapContainer = document.querySelector('.map__filters-container');
