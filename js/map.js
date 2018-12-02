@@ -107,10 +107,10 @@ createAd();
 var createPin = function (realtor, index) {
   var pinElement = pinMapTemplate.cloneNode(true);
 
-  pinMapTemplate.style.left = realtor.location.x - PIN_WIDTH / 2 + 'px';
-  pinMapTemplate.style.top = realtor.location.y - PIN_HEIGHT + 'px';
-  pinAvatar.src = realtor.author.avatar;
-  pinAvatar.alt = realtor.offer.title;
+  pinElement.querySelector('img').src = realtor.author.avatar;
+  pinElement.querySelector('img').alt = realtor.offer.title;
+  pinElement.style.left = realtor.location.x - PIN_WIDTH / 2 + 'px';
+  pinElement.style.top = realtor.location.y - PIN_HEIGHT + 'px';
   pinElement.setAttribute('data-index', index);
   pinElement.addEventListener('click', openPopup);
 
