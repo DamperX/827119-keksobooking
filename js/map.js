@@ -173,7 +173,7 @@ var createNoticetOnMap = function (notice) {
 var renderPinsOnMap = function (pins) {
   var pinFragment = document.createDocumentFragment();
 
-  for (var i = 0; i < pins.length - 1; i++) {
+  for (var i = 0; i < pins.length; i++) {
     pinFragment.appendChild(createPin(realtorsList[i], i));
   }
 
