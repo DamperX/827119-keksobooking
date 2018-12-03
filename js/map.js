@@ -27,6 +27,25 @@ var ESC_KEYCODE = 27;
 var PIN_X = '570';
 var PIN_Y = '375';
 
+var HOUSE_COAST = {
+  'bungalo': {
+    min: '0',
+    placeholder: '0'
+  },
+  'flat': {
+    min: '1000',
+    placeholder: '1000'
+  },
+  'house': {
+    min: '5000',
+    placeholder: '5000'
+  },
+  'palace': {
+    min: '10000',
+    placeholder: '10000'
+  }
+};
+
 var listTitle = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 var listPrice = ['palace', 'flat', 'house', 'bungalo'];
 var listTime = ['12:00', '13:00', '14:00'];
@@ -259,3 +278,42 @@ mainPin.addEventListener('mouseup', function () {
 
 setAddress();
 hideInterface();
+
+var inputTitle = adForms.querySelector('#title');
+var inputPrice = adForms.querySelector('#price');
+var inputType = adForms.querySelector('#type');
+var inputCapacity = adForms.querySelector('#capacity');
+var inputRoomNumber = adForms.querySelector('#room_number');
+
+inputTitle.addEventListener('invalid', function (evt) {
+  if (inputTitle.validity.tooShort) {
+    inputTitle.setCustomValidity('Минимальная длина 30 символов');
+  } else if (inputTitle.validity.tooLong) {
+    inputTitle.setCustomValidity('Максимальная длина 100 символов');
+  } else if (inputTitle.validity.valueMissing) {
+    inputTitle.setCustomValidity('Обязательное поле');
+  } else {
+    inputTitle.setCustomValidity('');
+  }
+});
+
+inputType.addEventListener('input', function () {
+  switch (inputType.value) {
+    case 'bungalo':
+      inputPrice.min = HOUSE_COAST.bungalo.min;
+      inputPrice.placeholder = HOUSE_COAST.bungalo.placeholder;
+      return;
+    case 'flat':
+      inputPrice.min = HOUSE_COAST.flat.min;
+      inputPrice.placeholder = HOUSE_COAST.flat.placeholder;
+      return;
+    case 'house':
+      inputPrice.min = HOUSE_COAST.house.min;
+      inputPrice.placeholder = HOUSE_COAST.house.placeholder;
+      return;
+    default:
+      inputPrice.min = HOUSE_COAST.palace.min;
+      inputPrice.placeholder = HOUSE_COAST.palace.placeholder;
+      return;
+  }
+});
