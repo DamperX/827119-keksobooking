@@ -22,6 +22,11 @@ var PHOTO_HEIGHT = '40';
 var PIN_WIDTH = '50';
 var PIN_HEIGHT = '70';
 
+var ESC_KEYCODE = 27;
+
+var PIN_X = '570';
+var PIN_Y = '375';
+
 var listTitle = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 var listPrice = ['palace', 'flat', 'house', 'bungalo'];
 var listTime = ['12:00', '13:00', '14:00'];
@@ -30,13 +35,18 @@ var listPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://
 
 var realtorsList = [];
 
+var isAvailable = true;
+
 var tokyoMap = document.querySelector('.map');
-tokyoMap.classList.remove('map--faded');
 var pinMapTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var pinAvatar = pinMapTemplate.querySelector('img');
+var mainPin = tokyoMap.querySelector('.map__pin--main');
 var pinPlace = document.querySelector('.map__pins');
 var modalAdTemplate = document.querySelector('#card').content.querySelector('.map__card');
 var mapContainer = document.querySelector('.map__filters-container');
+var adForms = document.querySelector('.ad-form');
+var formFieldsets = document.querySelectorAll('fieldset');
+var formSelects = document.querySelectorAll('select');
+var adressInput = adForms.querySelector('#address');
 
 // Возвращает случайное число из диапазона
 var getRandomInRange = function (min, max) {
@@ -61,7 +71,7 @@ var getMixArray = function (array) {
   return array;
 };
 
-var createRealtors = function () {
+var createAd = function () {
   for (var i = 0; i < REALTORS_COUNT; i++) {
 
     var locationX = getRandomInRange(MIN_X, MAX_X);
@@ -93,18 +103,21 @@ var createRealtors = function () {
   return realtorsList;
 };
 
-createRealtors();
+createAd();
 
-var createPin = function (realtor) {
+var createPin = function (realtor, index) {
   var pinElement = pinMapTemplate.cloneNode(true);
 
-  pinMapTemplate.style.left = realtor.location.x - PIN_WIDTH + 'px';
-  pinMapTemplate.style.top = realtor.location.y - PIN_HEIGHT + 'px';
-  pinAvatar.src = realtor.author.avatar;
-  pinAvatar.alt = realtor.offer.title;
+  pinElement.querySelector('img').src = realtor.author.avatar;
+  pinElement.querySelector('img').alt = realtor.offer.title;
+  pinElement.style.left = realtor.location.x - PIN_WIDTH / 2 + 'px';
+  pinElement.style.top = realtor.location.y - PIN_HEIGHT + 'px';
+  pinElement.setAttribute('data-index', index);
+  pinElement.addEventListener('click', openPopup);
 
   return pinElement;
 };
+
 
 var getHouseType = function (type) {
   switch (type) {
@@ -158,20 +171,91 @@ var createNoticetOnMap = function (notice) {
   return noticeElement;
 };
 
-var renderPinsOnMap = function () {
+var renderPinsOnMap = function (pins) {
   var pinFragment = document.createDocumentFragment();
 
-  for (var i = 0; i < realtorsList.length; i++) {
-    pinFragment.appendChild(createPin(realtorsList[i]));
+  for (var i = 0; i < pins.length; i++) {
+    pinFragment.appendChild(createPin(realtorsList[i], i));
   }
 
   pinPlace.appendChild(pinFragment);
 };
 
-renderPinsOnMap();
-
-var includeNoticeOnMap = function () {
-  tokyoMap.insertBefore(createNoticetOnMap(realtorsList[0]), mapContainer);
+// Активирует страницу
+var activateForm = function () {
+  tokyoMap.classList.remove('map--faded');
+  adForms.classList.remove('ad-form--disabled');
 };
 
-includeNoticeOnMap();
+var deactivateForm = function () {
+  tokyoMap.classList.add('map--faded');
+  adForms.classList.add('ad-form--disabled');
+};
+
+// Переключает активацю формы
+var switchForm = function (tag, value) {
+  for (var i = 0; i < tag.length; i++) {
+    if (value === 'hide') {
+      tag[i].disabled = true;
+    } else if (value === 'show') {
+      tag[i].disabled = false;
+    }
+  }
+};
+
+// Показывает интерфейс
+var showInterface = function () {
+  switchForm(formFieldsets, 'show');
+  switchForm(formSelects, 'show');
+  activateForm();
+};
+
+var hideInterface = function () {
+  switchForm(formFieldsets, 'hide');
+  switchForm(formSelects, 'hide');
+  deactivateForm();
+};
+
+// Отрисовывает координаты пина
+var setAddress = function () {
+  adressInput.value = PIN_X + ', ' + PIN_Y;
+};
+
+var pressEscClose = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
+
+var closePopup = function () {
+  if (tokyoMap.contains(tokyoMap.querySelector('.popup'))) {
+    tokyoMap.querySelector('.popup').remove('popup');
+    tokyoMap.querySelector('.map__pin--active').classList.remove('map__pin--active');
+  }
+};
+
+var openPopup = function (evt) {
+  if (tokyoMap.contains(tokyoMap.querySelector('.map__pin--active'))) {
+    tokyoMap.querySelector('.map__pin--active').classList.remove('map__pin--active');
+  }
+  if (tokyoMap.contains(tokyoMap.querySelector('.popup'))) {
+    tokyoMap.querySelector('.popup').remove('popup');
+  }
+  evt.currentTarget.classList.add('map__pin--active');
+  tokyoMap.insertBefore(createNoticetOnMap(realtorsList[evt.currentTarget.dataset.index]), mapContainer);
+  var popupClose = document.querySelector('.popup__close');
+  popupClose.addEventListener('click', closePopup);
+  document.addEventListener('keydown', pressEscClose);
+};
+
+
+mainPin.addEventListener('mouseup', function () {
+  if (isAvailable) {
+    showInterface();
+    renderPinsOnMap(realtorsList);
+    isAvailable = false;
+  }
+});
+
+setAddress();
+hideInterface();
