@@ -35,6 +35,8 @@ var listPhotos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://
 
 var realtorsList = [];
 
+var isAvailable = true;
+
 var tokyoMap = document.querySelector('.map');
 var pinMapTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var mainPin = tokyoMap.querySelector('.map__pin--main');
@@ -206,7 +208,6 @@ var showInterface = function () {
   switchForm(formFieldsets, 'show');
   switchForm(formSelects, 'show');
   activateForm();
-  renderPinsOnMap(realtorsList);
 };
 
 var hideInterface = function () {
@@ -247,7 +248,14 @@ var openPopup = function (evt) {
   document.addEventListener('keydown', pressEscClose);
 };
 
-mainPin.addEventListener('mouseup', showInterface);
 
-hideInterface();
+mainPin.addEventListener('mouseup', function () {
+  if (isAvailable) {
+    showInterface();
+    renderPinsOnMap(realtorsList);
+    isAvailable = false;
+  }
+});
+
 setAddress();
+hideInterface();
