@@ -287,7 +287,7 @@ var inputRoomNumber = adForms.querySelector('#room_number');
 var capacityOptions = inputCapacity.querySelectorAll('option');
 var roomNumberOptions = inputRoomNumber.querySelectorAll('option');
 
-inputTitle.addEventListener('invalid', function (evt) {
+inputTitle.addEventListener('invalid', function () {
   if (inputTitle.validity.tooShort) {
     inputTitle.setCustomValidity('Минимальная длина 30 символов');
   } else if (inputTitle.validity.tooLong) {
