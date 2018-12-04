@@ -365,6 +365,3 @@ inputTimeIn.addEventListener('change', function (evt) {
 inputTimeOut.addEventListener('change', function (evt) {
   inputTimeIn.value = evt.target.value;
 });
-
-
-
