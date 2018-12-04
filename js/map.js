@@ -286,6 +286,8 @@ var inputCapacity = adForms.querySelector('#capacity');
 var inputRoomNumber = adForms.querySelector('#room_number');
 var capacityOptions = inputCapacity.querySelectorAll('option');
 var roomNumberOptions = inputRoomNumber.querySelectorAll('option');
+var inputTimeIn = adForms.querySelector('#timein');
+var inputTimeOut = adForms.querySelector('#timeout');
 
 inputTitle.addEventListener('invalid', function () {
   if (inputTitle.validity.tooShort) {
@@ -320,7 +322,7 @@ inputType.addEventListener('input', function () {
   }
 });
 
-var synhCapacity = function () {
+var synchCapacity = function () {
   for (var i = 0; i < capacityOptions.length; i++) {
     capacityOptions[i].disabled = false;
   }
@@ -354,5 +356,15 @@ var synhCapacity = function () {
   }
 };
 
-inputRoomNumber.addEventListener('change', synhCapacity);
+inputRoomNumber.addEventListener('change', synchCapacity);
+
+inputTimeIn.addEventListener('change', function (evt) {
+  inputTimeOut.value = evt.target.value;
+});
+
+inputTimeOut.addEventListener('change', function (evt) {
+  inputTimeIn.value = evt.target.value;
+});
+
+
 
