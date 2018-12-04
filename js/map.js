@@ -284,6 +284,8 @@ var inputPrice = adForms.querySelector('#price');
 var inputType = adForms.querySelector('#type');
 var inputCapacity = adForms.querySelector('#capacity');
 var inputRoomNumber = adForms.querySelector('#room_number');
+var capacityOptions = inputCapacity.querySelectorAll('option');
+var roomNumberOptions = inputRoomNumber.querySelectorAll('option');
 
 inputTitle.addEventListener('invalid', function (evt) {
   if (inputTitle.validity.tooShort) {
@@ -317,3 +319,40 @@ inputType.addEventListener('input', function () {
       return;
   }
 });
+
+var synhCapacity = function () {
+  for (var i = 0; i < capacityOptions.length; i++) {
+    capacityOptions[i].disabled = false;
+  }
+
+  for (var t = 0; t < roomNumberOptions.length; t++) {
+    if (roomNumberOptions[t].selected === true) {
+      switch (roomNumberOptions[t].value) {
+        case '1':
+          capacityOptions[2].selected = true;
+          capacityOptions[0].disabled = true;
+          capacityOptions[1].disabled = true;
+          capacityOptions[3].disabled = true;
+          break;
+        case '2':
+          capacityOptions[1].selected = true;
+          capacityOptions[0].disabled = true;
+          capacityOptions[3].disabled = true;
+          break;
+        case '3':
+          capacityOptions[0].selected = true;
+          capacityOptions[3].disabled = true;
+          break;
+        case '100':
+          capacityOptions[3].selected = true;
+          capacityOptions[0].disabled = true;
+          capacityOptions[1].disabled = true;
+          capacityOptions[2].disabled = true;
+          break;
+      }
+    }
+  }
+};
+
+inputRoomNumber.addEventListener('change', synhCapacity);
+
