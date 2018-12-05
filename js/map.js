@@ -301,7 +301,7 @@ inputTitle.addEventListener('invalid', function () {
   }
 });
 
-inputType.addEventListener('input', function () {
+var synchPrice = function () {
   switch (inputType.value) {
     case 'bungalo':
       inputPrice.min = AccomodationType.bungalo.min;
@@ -320,7 +320,9 @@ inputType.addEventListener('input', function () {
       inputPrice.placeholder = AccomodationType.palace.placeholder;
       return;
   }
-});
+};
+
+synchPrice();
 
 var synchCapacity = function () {
   for (var i = 0; i < capacityOptions.length; i++) {
@@ -357,7 +359,7 @@ var synchCapacity = function () {
 };
 
 synchCapacity();
-
+inputType.addEventListener('input', synchPrice);
 inputRoomNumber.addEventListener('change', synchCapacity);
 
 inputTimeIn.addEventListener('change', function (evt) {
