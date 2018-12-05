@@ -27,7 +27,7 @@ var ESC_KEYCODE = 27;
 var PIN_X = '570';
 var PIN_Y = '375';
 
-var AccomodationType  = {
+var AccomodationType = {
   'bungalo': {
     min: '0',
     placeholder: '0'
@@ -355,6 +355,8 @@ var synchCapacity = function () {
     }
   }
 };
+
+synchCapacity();
 
 inputRoomNumber.addEventListener('change', synchCapacity);
 
