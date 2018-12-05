@@ -27,7 +27,7 @@ var ESC_KEYCODE = 27;
 var PIN_X = '570';
 var PIN_Y = '375';
 
-var HOUSE_COAST = {
+var AccomodationType  = {
   'bungalo': {
     min: '0',
     placeholder: '0'
@@ -304,20 +304,20 @@ inputTitle.addEventListener('invalid', function () {
 inputType.addEventListener('input', function () {
   switch (inputType.value) {
     case 'bungalo':
-      inputPrice.min = HOUSE_COAST.bungalo.min;
-      inputPrice.placeholder = HOUSE_COAST.bungalo.placeholder;
+      inputPrice.min = AccomodationType.bungalo.min;
+      inputPrice.placeholder = AccomodationType.bungalo.placeholder;
       return;
     case 'flat':
-      inputPrice.min = HOUSE_COAST.flat.min;
-      inputPrice.placeholder = HOUSE_COAST.flat.placeholder;
+      inputPrice.min = AccomodationType.flat.min;
+      inputPrice.placeholder = AccomodationType.flat.placeholder;
       return;
     case 'house':
-      inputPrice.min = HOUSE_COAST.house.min;
-      inputPrice.placeholder = HOUSE_COAST.house.placeholder;
+      inputPrice.min = AccomodationType.house.min;
+      inputPrice.placeholder = AccomodationType.house.placeholder;
       return;
     default:
-      inputPrice.min = HOUSE_COAST.palace.min;
-      inputPrice.placeholder = HOUSE_COAST.palace.placeholder;
+      inputPrice.min = AccomodationType.palace.min;
+      inputPrice.placeholder = AccomodationType.palace.placeholder;
       return;
   }
 });
