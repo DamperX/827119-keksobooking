@@ -297,14 +297,22 @@ mainPin.addEventListener('mousedown', function (evt) {
       y: moveEvt.clientY
     };
 
-    if (mainPin.offsetTop - shift.y < MAX_Y - mainPin.offsetHeight && mainPin.offsetTop - shift.y > MIN_Y - mainPin.offsetHeight) {
+    var getPinTop = function () {
+      return mainPin.offsetTop - shift.y < MAX_Y - mainPin.offsetHeight && mainPin.offsetTop - shift.y > MIN_Y - mainPin.offsetHeight;
+    };
+
+    var getPinLeft = function () {
+      return mainPin.offsetLeft - shift.x < MAX_X - mainPin.offsetWidth && mainPin.offsetLeft - shift.x > MIN_X;
+    };
+
+    if (getPinTop()) {
       mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
     }
-    if (mainPin.offsetLeft - shift.x < MAX_X - mainPin.offsetWidth && mainPin.offsetLeft - shift.x > MIN_X) {
+    if (getPinLeft()) {
       mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
     }
 
-    adressInput.value = mainPin.offsetLeft + ', ' + mainPin.offsetTop;
+    adressInput.value = Math.floor(mainPin.offsetLeft + mainPin.offsetWidth / 2) + ', ' + Math.floor(mainPin.offsetTop + mainPin.offsetHeight);
   };
 
   var onMouseUp = function (upEvt) {
