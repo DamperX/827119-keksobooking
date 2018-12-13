@@ -12,8 +12,12 @@
 
     errorMessage.textContent = message;
 
-    indexMain.insertAdjacentElement('afterbegin', errorElement);
-    document.addEventListener('keydown', closeErrorMessage);
+    indexMain.appendChild(errorElement);
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        closeErrorMessage();
+      }
+    });
     errorElement.addEventListener('click', closeErrorMessage);
     errorBtn.addEventListener('click', closeErrorMessage);
   };
@@ -21,11 +25,7 @@
   var closeErrorMessage = function () {
     var modalError = document.querySelector('.error');
     indexMain.removeChild(modalError);
-    document.removeEventListener('keydown', function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        closeErrorMessage();
-      }
-    });
+    document.removeEventListener('keydown', closeErrorMessage);
     modalError.removeEventListener('click', closeErrorMessage);
   };
 
@@ -33,18 +33,18 @@
     var success = document.querySelector('#success').content.querySelector('.success');
     var successElement = success.cloneNode(true);
     indexMain.appendChild(successElement);
-    document.addEventListener('keydown', closeSuccessMessage);
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        closeSuccessMessage();
+      }
+    });
     successElement.addEventListener('click', closeSuccessMessage);
   };
 
   var closeSuccessMessage = function () {
     var modalSucces = document.querySelector('.success');
     indexMain.removeChild(modalSucces);
-    document.removeEventListener('keydown', function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        closeSuccessMessage();
-      }
-    });
+    document.removeEventListener('keydown', closeSuccessMessage);
     modalSucces.removeEventListener('click', closeSuccessMessage);
   };
 
