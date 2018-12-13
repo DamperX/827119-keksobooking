@@ -141,10 +141,8 @@
     adressInput.value = PIN_X + ', ' + PIN_Y;
   };
 
-
-
   adForms.addEventListener('submit', function (evt) {
-    window.backend.upload(new FormData, window.utils.insertSuccessMessage, window.utils.insertErrorMessage);
+    window.backend.upload(new FormData(adForms), window.utils.insertSuccessMessage, window.utils.insertErrorMessage);
     evt.preventDefault();
   });
 

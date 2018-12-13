@@ -39,13 +39,13 @@
 
   var closeSuccessMessage = function () {
     var modalSucces = document.querySelector('.success');
-    indexMain.removeChild(successElement);
+    indexMain.removeChild(modalSucces);
     document.removeEventListener('keydown', function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
         closeSuccessMessage();
       }
     });
-    successElement.removeEventListener('click', closeSuccessMessage);
+    modalSucces.removeEventListener('click', closeSuccessMessage);
   };
 
   window.utils = {
