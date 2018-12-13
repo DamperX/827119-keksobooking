@@ -25,7 +25,7 @@
       var pinFragment = document.createDocumentFragment();
 
       for (var i = 0; i < pins.length; i++) {
-        pinFragment.appendChild(createPin(window.realtorsList[i], i));
+        pinFragment.appendChild(createPin(pins[i], i));
       }
 
       pinPlace.appendChild(pinFragment);

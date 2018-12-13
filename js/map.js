@@ -25,7 +25,7 @@
   var showInterface = function () {
     showMap();
     window.form.showForm();
-    window.pins.renderPinsOnMap(window.realtorsList);
+    window.backend.download(window.pins.renderPinsOnMap(window.data.realtorsList), window.utils.insertErrorMessage);
   };
 
   var pressEscClose = function (evt) {
@@ -49,7 +49,7 @@
       tokyoMap.querySelector('.popup').remove('popup');
     }
     evt.currentTarget.classList.add('map__pin--active');
-    tokyoMap.insertBefore(window.card.createNoticetOnMap(window.realtorsList[evt.currentTarget.dataset.index]), mapContainer);
+    tokyoMap.insertBefore(window.card.createNoticetOnMap(window.data.realtorsList[evt.currentTarget.dataset.index]), mapContainer);
     var popupClose = document.querySelector('.popup__close');
     popupClose.addEventListener('click', closePopup);
     document.addEventListener('keydown', pressEscClose);
@@ -58,7 +58,7 @@
   window.mainPin.addEventListener('mouseup', function () {
     if (isAvailable) {
       showInterface();
-      window.pins.renderPinsOnMap(window.realtorsList);
+      window.backend.download(window.pins.renderPinsOnMap(window.data.realtorsList), window.utils.insertErrorMessage);
       isAvailable = false;
     }
   });
