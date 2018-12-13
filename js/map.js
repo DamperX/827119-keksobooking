@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var ESC_KEYCODE = 27;
 
   var isAvailable = true;
 
@@ -29,7 +28,7 @@
   };
 
   var pressEscClose = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === window.utils.ESC) {
       closePopup();
     }
   };

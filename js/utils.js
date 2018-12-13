@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var ESC_KEYCODE = 27;
   var indexMain = document.querySelector('main');
 
   var insertErrorMessage = function (message) {
@@ -20,7 +21,11 @@
   var closeErrorMessage = function () {
     var modalError = document.querySelector('.error');
     indexMain.removeChild(modalError);
-    document.removeEventListener('keydown', closeErrorMessage);
+    document.removeEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        closeErrorMessage();
+      }
+    });
     modalError.removeEventListener('click', closeErrorMessage);
   };
 
@@ -35,11 +40,16 @@
   var closeSuccessMessage = function () {
     var modalSucces = document.querySelector('.success');
     indexMain.removeChild(successElement);
-    document.removeEventListener('keydown', closeSuccessMessage);
+    document.removeEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        closeSuccessMessage();
+      }
+    });
     successElement.removeEventListener('click', closeSuccessMessage);
   };
 
   window.utils = {
+    ESC: ESC_KEYCODE,
     insertErrorMessage: insertErrorMessage,
     insertSuccessMessage: insertSuccessMessage
   };
