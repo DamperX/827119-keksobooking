@@ -53,10 +53,10 @@
     document.addEventListener('keydown', pressEscClose);
   };
 
-  var activateInterface = function (isAvaible) {
-      showInterface();
-      window.form.setAdress();
-      window.pins.renderPinsOnMap(window.realtorsList);
+  var activateInterface = function () {
+    showInterface();
+    window.form.setAdress();
+    window.pins.renderPinsOnMap(window.realtorsList);
   };
 
   mainPin.addEventListener('mouseup', activateInterface);

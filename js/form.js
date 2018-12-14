@@ -174,10 +174,10 @@
   resetBtn.addEventListener('click', function (evt) {
     evt.preventDefault();
     resetForm();
-  })
+  });
 
   var setAdress = function () {
-    adressInput.value = Math.floor(window.map.mainPin.offsetLeft + window.map.mainPinWidth  / 2) + ', ' + Math.floor(window.map.mainPin.offsetTop + window.map.mainPinHeight);
+    adressInput.value = Math.floor(window.map.mainPin.offsetLeft + window.map.mainPinWidth / 2) + ', ' + Math.floor(window.map.mainPin.offsetTop + window.map.mainPinHeight);
   };
 
   var showForm = function () {
@@ -194,7 +194,7 @@
 
   window.form = {
     setAdress: setAdress,
-    showForm:  showForm,
+    showForm: showForm,
     hideForm: hideForm
   };
 
