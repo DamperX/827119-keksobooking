@@ -1,12 +1,12 @@
 'use strict';
 
 (function () {
-
-  var isAvailable = true;
-
   var tokyoMap = document.querySelector('.map');
   var mapContainer = document.querySelector('.map__filters-container');
-  window.mainPin = tokyoMap.querySelector('.map__pin--main');
+  var mainPin = tokyoMap.querySelector('.map__pin--main');
+
+  var mainPinWidth = mainPin.offsetWidth;
+  var mainPinHeight = mainPin.offsetHeight;
 
   var fadeMap = function () {
     tokyoMap.classList.add('map--faded');
@@ -24,7 +24,6 @@
   var showInterface = function () {
     showMap();
     window.form.showForm();
-    window.backend.download(window.pins.renderPinsOnMap(window.data.realtorsList), window.utils.insertErrorMessage);
   };
 
   var pressEscClose = function (evt) {
@@ -40,7 +39,7 @@
     }
   };
 
-  window.openPopup = function (evt) {
+  var openPopup = function (evt) {
     if (tokyoMap.contains(tokyoMap.querySelector('.map__pin--active'))) {
       tokyoMap.querySelector('.map__pin--active').classList.remove('map__pin--active');
     }
@@ -48,20 +47,30 @@
       tokyoMap.querySelector('.popup').remove('popup');
     }
     evt.currentTarget.classList.add('map__pin--active');
-    tokyoMap.insertBefore(window.card.createNoticetOnMap(window.data.realtorsList[evt.currentTarget.dataset.index]), mapContainer);
+    tokyoMap.insertBefore(window.card.createNoticetOnMap(window.realtorsList[evt.currentTarget.dataset.index]), mapContainer);
     var popupClose = document.querySelector('.popup__close');
     popupClose.addEventListener('click', closePopup);
     document.addEventListener('keydown', pressEscClose);
   };
 
-  window.mainPin.addEventListener('mouseup', function () {
-    if (isAvailable) {
+  var activateInterface = function (isAvaible) {
       showInterface();
-      window.backend.download(window.pins.renderPinsOnMap(window.data.realtorsList), window.utils.insertErrorMessage);
-      isAvailable = false;
-    }
-  });
+      window.form.setAdress();
+      window.pins.renderPinsOnMap(window.realtorsList);
+  };
+
+  mainPin.addEventListener('mouseup', activateInterface);
 
   hideInterface();
+
+  window.map = {
+    mainPinWidth: mainPinWidth,
+    mainPinHeight: mainPinHeight,
+    tokyoMap: tokyoMap,
+    mainPin: mainPin,
+    openPopup: openPopup,
+    closePopup: closePopup,
+    hideInterface: hideInterface
+  };
 
 })();

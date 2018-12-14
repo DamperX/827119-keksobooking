@@ -15,7 +15,7 @@
     pinElement.style.left = realtor.location.x - PIN_WIDTH / 2 + 'px';
     pinElement.style.top = realtor.location.y - PIN_HEIGHT + 'px';
     pinElement.setAttribute('data-index', index);
-    pinElement.addEventListener('click', window.openPopup);
+    pinElement.addEventListener('click', window.map.openPopup);
 
     return pinElement;
   };

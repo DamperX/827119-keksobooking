@@ -1,9 +1,11 @@
 'use strict';
 
 (function () {
-  var realtorsList = [];
+  window.realtorsList = [];
 
-  window.data = {
-    realtorsList: realtorsList
+  var getArrayRealtos = function (serverData) {
+    window.realtorsList = serverData;
   };
+
+  window.backend.download(getArrayRealtos, window.utils.insertErrorMessage);
 })();
