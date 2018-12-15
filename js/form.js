@@ -163,7 +163,7 @@
     window.utils.insertSuccessMessage();
     synchCapacity();
     synchPrice();
-    window.form.setAdress();
+    setAdress();
   };
 
   adForms.addEventListener('submit', function (evt) {
@@ -174,6 +174,7 @@
   resetBtn.addEventListener('click', function (evt) {
     evt.preventDefault();
     resetForm();
+    setAdress();
   });
 
   var setAdress = function () {
