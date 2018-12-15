@@ -4,9 +4,6 @@
   var STATUS_OK = 200;
   var TIMEOUT = 10000;
 
-  var URL_DOWNLOAD = 'https://js.dump.academy/keksobooking/data';
-  var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
-
   var xhrRequest = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
