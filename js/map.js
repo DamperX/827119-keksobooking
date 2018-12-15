@@ -1,13 +1,12 @@
 'use strict';
 
 (function () {
-  var ESC_KEYCODE = 27;
-
-  var isAvailable = true;
-
   var tokyoMap = document.querySelector('.map');
   var mapContainer = document.querySelector('.map__filters-container');
-  window.mainPin = tokyoMap.querySelector('.map__pin--main');
+  var mainPin = tokyoMap.querySelector('.map__pin--main');
+
+  var mainPinWidth = mainPin.offsetWidth;
+  var mainPinHeight = mainPin.offsetHeight;
 
   var fadeMap = function () {
     tokyoMap.classList.add('map--faded');
@@ -25,11 +24,10 @@
   var showInterface = function () {
     showMap();
     window.form.showForm();
-    window.pins.renderPinsOnMap(window.realtorsList);
   };
 
   var pressEscClose = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === window.constants.ESC) {
       closePopup();
     }
   };
@@ -41,7 +39,18 @@
     }
   };
 
-  window.openPopup = function (evt) {
+  var getRealtorsList = function (serverData) {
+    window.realtorsList = serverData;
+    window.pins.renderPinsOnMap(window.realtorsList);
+  };
+
+  var activateInterface = function () {
+    showInterface();
+    window.form.setAdress();
+    window.backend.download(getRealtorsList, window.utils.insertErrorMessage);
+  };
+
+  var openPopup = function (evt) {
     if (tokyoMap.contains(tokyoMap.querySelector('.map__pin--active'))) {
       tokyoMap.querySelector('.map__pin--active').classList.remove('map__pin--active');
     }
@@ -55,14 +64,18 @@
     document.addEventListener('keydown', pressEscClose);
   };
 
-  window.mainPin.addEventListener('mouseup', function () {
-    if (isAvailable) {
-      showInterface();
-      window.pins.renderPinsOnMap(window.realtorsList);
-      isAvailable = false;
-    }
-  });
+  mainPin.addEventListener('mouseup', activateInterface);
 
   hideInterface();
+
+  window.map = {
+    mainPinWidth: mainPinWidth,
+    mainPinHeight: mainPinHeight,
+    tokyoMap: tokyoMap,
+    mainPin: mainPin,
+    openPopup: openPopup,
+    closePopup: closePopup,
+    hideInterface: hideInterface
+  };
 
 })();

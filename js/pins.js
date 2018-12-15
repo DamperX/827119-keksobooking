@@ -15,7 +15,7 @@
     pinElement.style.left = realtor.location.x - PIN_WIDTH / 2 + 'px';
     pinElement.style.top = realtor.location.y - PIN_HEIGHT + 'px';
     pinElement.setAttribute('data-index', index);
-    pinElement.addEventListener('click', window.openPopup);
+    pinElement.addEventListener('click', window.map.openPopup);
 
     return pinElement;
   };
@@ -25,7 +25,7 @@
       var pinFragment = document.createDocumentFragment();
 
       for (var i = 0; i < pins.length; i++) {
-        pinFragment.appendChild(createPin(window.realtorsList[i], i));
+        pinFragment.appendChild(createPin(pins[i], i));
       }
 
       pinPlace.appendChild(pinFragment);

@@ -36,6 +36,7 @@
   var adressInput = adForms.querySelector('#address');
   var formFieldsets = document.querySelectorAll('fieldset');
   var formSelects = document.querySelectorAll('select');
+  var resetBtn = adForms.querySelector('.ad-form__reset');
 
   inputTitle.addEventListener('invalid', function () {
     if (inputTitle.validity.tooShort) {
@@ -143,21 +144,59 @@
 
   setAdressDefault();
 
-  window.form = {
-    setAdress: function () {
-      adressInput.value = Math.floor(window.mainPin.offsetLeft + window.mainPin.offsetWidth / 2) + ', ' + Math.floor(window.mainPin.offsetTop + window.mainPin.offsetHeight);
-    },
+  var resetForm = function () {
+    adForms.reset();
+    window.map.hideInterface();
+    window.map.closePopup();
 
-    showForm: function () {
-      switchForm(formFieldsets, 'show');
-      switchForm(formSelects, 'show');
-      activateForm();
-    },
+    var pins = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
+    var pinsContainer = document.querySelector('.map__pins');
 
-    hideForm: function () {
-      switchForm(formFieldsets, 'hide');
-      switchForm(formSelects, 'hide');
-      deactivateForm();
+    for (var i = 0; i < pins.length; i++) {
+      pinsContainer.removeChild(pins[i]);
     }
+    window.drag.getDefaultPosition();
   };
+
+  var saveForm = function () {
+    resetForm();
+    window.utils.insertSuccessMessage();
+    synchCapacity();
+    synchPrice();
+    setAdress();
+  };
+
+  adForms.addEventListener('submit', function (evt) {
+    window.backend.upload(new FormData(adForms), saveForm, window.utils.insertErrorMessage);
+    evt.preventDefault();
+  });
+
+  resetBtn.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    resetForm();
+    setAdress();
+  });
+
+  var setAdress = function () {
+    adressInput.value = Math.floor(window.map.mainPin.offsetLeft + window.map.mainPinWidth / 2) + ', ' + Math.floor(window.map.mainPin.offsetTop + window.map.mainPinHeight);
+  };
+
+  var showForm = function () {
+    switchForm(formFieldsets, 'show');
+    switchForm(formSelects, 'show');
+    activateForm();
+  };
+
+  var hideForm = function () {
+    switchForm(formFieldsets, 'hide');
+    switchForm(formSelects, 'hide');
+    deactivateForm();
+  };
+
+  window.form = {
+    setAdress: setAdress,
+    showForm: showForm,
+    hideForm: hideForm
+  };
+
 })();

@@ -1,28 +1,56 @@
 'use strict';
 
 (function () {
-  window.utils = {
-    // Возвращает случайное число из диапазона
-    getRandomInRange: function (min, max) {
-      var randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-      return randomNumber;
-    },
+  var indexMain = document.querySelector('main');
 
-    // Возвращает случайный элемент массива
-    getRandomElementFromArray: function (array) {
-      var randomArray = Math.floor(Math.random() * array.length);
-      return array[randomArray];
-    },
+  var insertErrorMessage = function (message) {
+    var error = document.querySelector('#error').content.querySelector('.error');
+    var errorElement = error.cloneNode(true);
+    var errorMessage = errorElement.querySelector('.error__message');
+    var errorBtn = errorElement.querySelector('.error__button');
 
-    // Возвращает массив в случайном порядке
-    getMixArray: function (array) {
-      for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var x = array[i];
-        array[i] = array[j];
-        array[j] = x;
+    errorMessage.textContent = message;
+
+    indexMain.appendChild(errorElement);
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.constants.ESC) {
+        closeErrorMessage();
       }
-      return array;
-    }
+    });
+    errorElement.addEventListener('click', closeErrorMessage);
+    errorBtn.addEventListener('click', closeErrorMessage);
   };
+
+  var closeErrorMessage = function () {
+    var modalError = document.querySelector('.error');
+    indexMain.removeChild(modalError);
+    document.removeEventListener('keydown', closeErrorMessage);
+    modalError.removeEventListener('click', closeErrorMessage);
+  };
+
+  var insertSuccessMessage = function () {
+    var success = document.querySelector('#success').content.querySelector('.success');
+    var successElement = success.cloneNode(true);
+    indexMain.appendChild(successElement);
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.constants.ESC) {
+        closeSuccessMessage();
+      }
+    });
+    successElement.addEventListener('click', closeSuccessMessage);
+  };
+
+  var closeSuccessMessage = function () {
+    var modalSucces = document.querySelector('.success');
+    indexMain.removeChild(modalSucces);
+    document.removeEventListener('keydown', closeSuccessMessage);
+    modalSucces.removeEventListener('click', closeSuccessMessage);
+  };
+
+  window.utils = {
+    insertErrorMessage: insertErrorMessage,
+    insertSuccessMessage: insertSuccessMessage
+  };
+
 })();
+
