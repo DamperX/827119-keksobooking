@@ -27,7 +27,7 @@
   };
 
   var pressEscClose = function (evt) {
-    if (evt.keyCode === window.utils.ESC) {
+    if (evt.keyCode === window.constants.ESC) {
       closePopup();
     }
   };
@@ -37,6 +37,17 @@
       tokyoMap.querySelector('.popup').remove('popup');
       tokyoMap.querySelector('.map__pin--active').classList.remove('map__pin--active');
     }
+  };
+
+  var getRealtorsList = function (serverData) {
+    window.realtorsList = serverData;
+    window.pins.renderPinsOnMap(window.realtorsList);
+  };
+
+  var activateInterface = function () {
+    showInterface();
+    window.form.setAdress();
+    window.backend.download(getRealtorsList, window.utils.insertErrorMessage);
   };
 
   var openPopup = function (evt) {
@@ -51,12 +62,6 @@
     var popupClose = document.querySelector('.popup__close');
     popupClose.addEventListener('click', closePopup);
     document.addEventListener('keydown', pressEscClose);
-  };
-
-  var activateInterface = function () {
-    showInterface();
-    window.form.setAdress();
-    window.pins.renderPinsOnMap(window.realtorsList);
   };
 
   mainPin.addEventListener('mouseup', activateInterface);

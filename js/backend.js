@@ -4,9 +4,11 @@
   var STATUS_OK = 200;
   var TIMEOUT = 10000;
 
-  var download = function (onLoad, onError) {
+  var URL_DOWNLOAD = 'https://js.dump.academy/keksobooking/data';
+  var URL_UPLOAD = 'https://js.dump.academy/keksobooking';
+
+  var xhrRequest = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
-    var URL = 'https://js.dump.academy/keksobooking/data';
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
@@ -17,50 +19,31 @@
       }
     });
 
+    xhr.timeout = TIMEOUT;
+
     xhr.addEventListener('error', function () {
-      onError('Ошибка');
+      onError('Не удалось загрузить данные');
     });
 
     xhr.addEventListener('timeout', function () {
       onError('Запрос не успел выполниться за ' + xhr.timeout + ' мс');
     });
 
-    xhr.timeout = TIMEOUT;
-
-    xhr.open('GET', URL);
-    xhr.send();
-  };
-
-  var upload = function (data, onLoad, onError) {
-    var xhr = new XMLHttpRequest();
-    var URL = 'https://js.dump.academy/keksobooking';
-    xhr.responseType = 'json';
-
-    xhr.addEventListener('load', function () {
-      if (xhr.status === STATUS_OK) {
-        onLoad(xhr.response);
-      } else {
-        onError('Ошибка загрузки данных ' + xhr.status + ' ' + xhr.statusText);
-      }
-    });
-
-    xhr.addEventListener('error', function () {
-      onError('Ошибка');
-    });
-
-    xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + ' мс');
-    });
-
-    xhr.timeout = TIMEOUT;
-
-    xhr.open('POST', URL);
-    xhr.send(data);
+    return xhr;
   };
 
   window.backend = {
-    download: download,
-    upload: upload
+    download: function (onLoad, onError) {
+      var xhr = xhrRequest(onLoad, onError);
+      xhr.open('GET', window.constants.AdressUrl.DOWNLOAD);
+      xhr.send();
+    },
+
+    upload: function (onLoad, onError, data) {
+      var xhr = xhrRequest(onLoad, onError);
+      xhr.open('POST', window.constants.AdressUrl.UPLOAD);
+      xhr.send(data);
+    }
   };
 
 })();
