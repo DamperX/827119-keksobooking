@@ -156,6 +156,7 @@
       pinsContainer.removeChild(pins[i]);
     }
     window.drag.getDefaultPosition();
+    window.map.mainPin.addEventListener('mouseup', window.map.activateInterface);
   };
 
   var saveForm = function () {

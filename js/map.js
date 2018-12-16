@@ -44,10 +44,11 @@
     window.pins.renderPinsOnMap(window.realtorsList);
   };
 
-  var activateInterface = function () {
+  var activateInterface = function (evt) {
     showInterface();
     window.form.setAdress();
     window.backend.download(getRealtorsList, window.utils.insertErrorMessage);
+    mainPin.removeEventListener('mouseup', activateInterface);
   };
 
   var openPopup = function (evt) {
@@ -69,6 +70,7 @@
   hideInterface();
 
   window.map = {
+    activateInterface: activateInterface,
     mainPinWidth: mainPinWidth,
     mainPinHeight: mainPinHeight,
     tokyoMap: tokyoMap,
