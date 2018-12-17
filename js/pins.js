@@ -20,21 +20,25 @@
     return pinElement;
   };
 
-  window.pins = {
-    renderPinsOnMap: function (pins) {
-      var pinFragment = document.createDocumentFragment();
+  var renderPinsOnMap = function (pins) {
+    var pinFragment = document.createDocumentFragment();
 
-      for (var i = 0; i < pins.length; i++) {
-        pinFragment.appendChild(createPin(pins[i]));
-      }
-
-      pinPlace.appendChild(pinFragment);
-    },
-    removePinsOnMap: function () {
-      var pins = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
-      for (var i = 0; i < pins.length; i++) {
-        pinPlace.removeChild(pins[i]);
-      }
+    for (var i = 0; i < pins.length; i++) {
+      pinFragment.appendChild(createPin(pins[i]));
     }
+
+    pinPlace.appendChild(pinFragment);
+  };
+
+  var removePinsOnMap = function () {
+    var pins = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < pins.length; i++) {
+      pinPlace.removeChild(pins[i]);
+    }
+  };
+
+  window.pins = {
+    renderPinsOnMap: renderPinsOnMap,
+    removePinsOnMap: removePinsOnMap
   };
 })();
