@@ -80,5 +80,5 @@
     window.pins.renderPinsOnMap(filterdList);
   };
 
-  mapFilters.addEventListener('change', getFilterRealtors);
+  mapFilters.addEventListener('change', window.utils.debounce(getFilterRealtors));
 })();

@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var DEBOUNCE_INTERVAL = 500;
+
   var indexMain = document.querySelector('main');
 
   var insertErrorMessage = function (message) {
@@ -47,7 +49,19 @@
     modalSucces.removeEventListener('click', closeSuccessMessage);
   };
 
+  var debounce = function (cb) {
+    var lastTimeout;
+
+    return function () {
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(cb, DEBOUNCE_INTERVAL);
+    };
+  };
+
   window.utils = {
+    debounce: debounce,
     insertErrorMessage: insertErrorMessage,
     insertSuccessMessage: insertSuccessMessage
   };
