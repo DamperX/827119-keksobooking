@@ -36,7 +36,7 @@
       case 'low':
         return realtors.offer.price <= HousingPriceValue.low.maxPrice;
       case 'middle':
-        return realtors.offer.price <= HousingPriceValue.middle.minPrice && realtors.offer.price <= HousingPriceValue.middle.maxPrice;
+        return realtors.offer.price >= HousingPriceValue.middle.minPrice && realtors.offer.price <= HousingPriceValue.middle.maxPrice;
       case 'heigh':
         return realtors.offer.price >= HousingPriceValue.heigh.minPrice;
       default:
