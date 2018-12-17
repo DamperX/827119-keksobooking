@@ -149,12 +149,7 @@
     window.map.hideInterface();
     window.map.closePopup();
 
-    var pins = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
-    var pinsContainer = document.querySelector('.map__pins');
-
-    for (var i = 0; i < pins.length; i++) {
-      pinsContainer.removeChild(pins[i]);
-    }
+    window.pins.removePinsOnMap();
     window.drag.getDefaultPosition();
     window.map.mainPin.addEventListener('mouseup', window.map.activateInterface);
   };
