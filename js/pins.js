@@ -4,6 +4,8 @@
   var PIN_WIDTH = '50';
   var PIN_HEIGHT = '70';
 
+  var PIN_AMOUNT = 5;
+
   var pinMapTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinPlace = document.querySelector('.map__pins');
 
@@ -22,8 +24,8 @@
 
   var renderPinsOnMap = function (pins) {
     var pinFragment = document.createDocumentFragment();
-
-    for (var i = 0; i < pins.length; i++) {
+    var pinsCopy = pins.slice(0, PIN_AMOUNT);
+    for (var i = 0; i < pinsCopy.length; i++) {
       pinFragment.appendChild(createPin(pins[i]));
     }
 
