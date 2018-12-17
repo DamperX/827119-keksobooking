@@ -29,18 +29,21 @@
     return xhr;
   };
 
-  window.backend = {
-    download: function (onLoad, onError) {
-      var xhr = xhrRequest(onLoad, onError);
-      xhr.open('GET', window.constants.AdressUrl.DOWNLOAD);
-      xhr.send();
-    },
+  var download = function (onLoad, onError) {
+    var xhr = xhrRequest(onLoad, onError);
+    xhr.open('GET', window.constants.AdressUrl.DOWNLOAD);
+    xhr.send();
+  };
 
-    upload: function (onLoad, onError, data) {
-      var xhr = xhrRequest(onLoad, onError);
-      xhr.open('POST', window.constants.AdressUrl.UPLOAD);
-      xhr.send(data);
-    }
+  var upload = function (onLoad, onError, data) {
+    var xhr = xhrRequest(onLoad, onError);
+    xhr.open('POST', window.constants.AdressUrl.UPLOAD);
+    xhr.send(data);
+  };
+
+  window.backend = {
+    download: download,
+    upload: upload
   };
 
 })();
