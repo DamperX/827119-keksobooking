@@ -49,7 +49,7 @@
       return true;
     }
 
-    return realtors.offer.rooms === parseInt(roomsSelect.value, 10);
+    return realtors.offer.rooms === Number(roomsSelect.value);
   };
 
   var getGuestsChange = function (realtors) {
@@ -57,7 +57,7 @@
       return true;
     }
 
-    return realtors.offer.guests === parseInt(guestsSelect.value, 10);
+    return realtors.offer.guests === Number(roomsSelect.value);
   };
 
   var getFutureChange = function (realtors) {
@@ -71,7 +71,7 @@
 
   var getFilterRealtors = function () {
     var realtorsCopy = window.realtorsList.slice();
-    var filterdList = realtorsCopy.filter(function (realtors) {
+    var filterdList = realtorsCopy.filter(function (realtor) {
       return getTypeChange(realtors) && getPriceChange(realtors) && getRoomsChange(realtors) && getGuestsChange(realtors) && getFutureChange(realtors);
     });
 
