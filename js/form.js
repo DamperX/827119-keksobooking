@@ -142,8 +142,6 @@
     adressInput.value = PIN_X + ', ' + PIN_Y;
   };
 
-  setAdressDefault();
-
   var resetForm = function () {
     adForms.reset();
     window.map.hideInterface();
@@ -159,7 +157,6 @@
     window.utils.insertSuccessMessage();
     synchCapacity();
     synchPrice();
-    setAdress();
   };
 
   adForms.addEventListener('submit', function (evt) {
@@ -170,11 +167,10 @@
   resetBtn.addEventListener('click', function (evt) {
     evt.preventDefault();
     resetForm();
-    setAdress();
   });
 
   var setAdress = function () {
-    adressInput.value = Math.floor(window.map.mainPin.offsetLeft + window.map.mainPinWidth / 2) + ', ' + Math.floor(window.map.mainPin.offsetTop + window.map.mainPinHeight);
+    adressInput.value = (window.map.mainPin.offsetLeft + Math.round(window.map.mainPin.offsetWidth / 2)) + ', ' + (window.map.mainPin.offsetTop + Math.round(window.map.mainPin.offsetHeight));
   };
 
   var showForm = function () {
@@ -190,6 +186,7 @@
   };
 
   window.form = {
+    setAdressDefault: setAdressDefault,
     setAdress: setAdress,
     showForm: showForm,
     hideForm: hideForm

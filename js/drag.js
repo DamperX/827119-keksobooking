@@ -7,9 +7,6 @@
   var MIN_Y = 130;
   var MAX_Y = 630;
 
-  var CENTER_X = window.map.tokyoMap.offsetWidth / 2 - window.map.mainPin.offsetWidth / 2;
-  var CENTER_Y = window.map.tokyoMap.offsetHeight / 2 - window.map.mainPin.offsetHeight / 2;
-
   window.map.mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     var startCoords = {
@@ -60,8 +57,13 @@
 
   });
 
+  var mainPinX = window.map.mainPin.offsetLeft;
+  var mainPinY = window.map.mainPin.offsetTop;
+
   var getDefaultPosition = function () {
-    window.map.mainPin.style = 'left: ' + CENTER_X + 'px; top: ' + CENTER_Y + 'px;';
+    window.map.mainPin.style.left = mainPinX + 'px';
+    window.map.mainPin.style.top = mainPinY + 'px';
+    window.form.setAdress();
   };
 
   window.drag = {

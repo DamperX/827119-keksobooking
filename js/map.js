@@ -5,9 +5,6 @@
   var mapContainer = document.querySelector('.map__filters-container');
   var mainPin = tokyoMap.querySelector('.map__pin--main');
 
-  var mainPinWidth = mainPin.offsetWidth;
-  var mainPinHeight = mainPin.offsetHeight;
-
   var fadeMap = function () {
     tokyoMap.classList.add('map--faded');
   };
@@ -19,6 +16,7 @@
   var hideInterface = function () {
     fadeMap();
     window.form.hideForm();
+    window.form.setAdress();
   };
 
   var showInterface = function () {
@@ -27,7 +25,7 @@
   };
 
   var pressEscClose = function (evt) {
-    if (evt.keyCode === window.constants.ESC) {
+    if (evt.keyCode === window.constants.Keycode.ESC) {
       closePopup();
     }
   };
@@ -49,9 +47,16 @@
 
   var activateInterface = function () {
     showInterface();
-    window.form.setAdress();
     window.backend.download(getRealtorsList, window.utils.insertErrorMessage);
     mainPin.removeEventListener('mouseup', activateInterface);
+    mainPin.removeEventListener('keydown', pressEnterShow);
+    window.form.setAdress();
+  };
+
+  var pressEnterShow = function (evt) {
+    if (evt.keyCode === window.constants.Keycode.ENTER) {
+      activateInterface();
+    }
   };
 
   var openPopup = function (evt) {
@@ -70,13 +75,12 @@
   };
 
   mainPin.addEventListener('mouseup', activateInterface);
+  mainPin.addEventListener('keydown', pressEnterShow);
 
   hideInterface();
 
   window.map = {
     activateInterface: activateInterface,
-    mainPinWidth: mainPinWidth,
-    mainPinHeight: mainPinHeight,
     tokyoMap: tokyoMap,
     mainPin: mainPin,
     openPopup: openPopup,

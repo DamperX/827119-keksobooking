@@ -35,7 +35,7 @@
     var successElement = success.cloneNode(true);
     indexMain.appendChild(successElement);
     document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.constants.ESC) {
+      if (evt.keyCode === window.constants.Keycode.ESC) {
         closeSuccessMessage();
       }
     });
