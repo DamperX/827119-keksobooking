@@ -138,10 +138,6 @@
     }
   };
 
-  var setAdressDefault = function () {
-    adressInput.value = PIN_X + ', ' + PIN_Y;
-  };
-
   var resetForm = function () {
     adForms.reset();
     window.map.hideInterface();
@@ -149,7 +145,7 @@
 
     window.pins.removePinsOnMap();
     window.drag.getDefaultPosition();
-    window.map.mainPin.addEventListener('mouseup', window.map.activateInterface);
+    window.mainPin.addEventListener('mouseup', window.map.activateInterface);
   };
 
   var saveForm = function () {
@@ -170,7 +166,7 @@
   });
 
   var setAdress = function () {
-    adressInput.value = (window.map.mainPin.offsetLeft + Math.round(window.map.mainPin.offsetWidth / 2)) + ', ' + (window.map.mainPin.offsetTop + Math.round(window.map.mainPin.offsetHeight));
+    adressInput.value = (window.mainPin.offsetLeft + Math.round(window.mainPin.offsetWidth / 2)) + ', ' + (window.mainPin.offsetTop + Math.round(window.mainPin.offsetHeight));
   };
 
   var showForm = function () {
@@ -186,7 +182,6 @@
   };
 
   window.form = {
-    setAdressDefault: setAdressDefault,
     setAdress: setAdress,
     showForm: showForm,
     hideForm: hideForm

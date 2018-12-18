@@ -3,7 +3,7 @@
 (function () {
   var tokyoMap = document.querySelector('.map');
   var mapContainer = document.querySelector('.map__filters-container');
-  var mainPin = tokyoMap.querySelector('.map__pin--main');
+  window.mainPin = tokyoMap.querySelector('.map__pin--main');
 
   var fadeMap = function () {
     tokyoMap.classList.add('map--faded');
@@ -82,7 +82,6 @@
   window.map = {
     activateInterface: activateInterface,
     tokyoMap: tokyoMap,
-    mainPin: mainPin,
     openPopup: openPopup,
     closePopup: closePopup,
     hideInterface: hideInterface
