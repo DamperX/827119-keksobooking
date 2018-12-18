@@ -1,9 +1,6 @@
 'use strict';
 
 (function () {
-  var PIN_X = '570';
-  var PIN_Y = '375';
-
   var AccomodationType = {
     'bungalo': {
       min: '0',

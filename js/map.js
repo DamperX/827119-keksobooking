@@ -48,8 +48,8 @@
   var activateInterface = function () {
     showInterface();
     window.backend.download(getRealtorsList, window.utils.insertErrorMessage);
-    mainPin.removeEventListener('mouseup', activateInterface);
-    mainPin.removeEventListener('keydown', pressEnterShow);
+    window.mainPin.removeEventListener('mouseup', activateInterface);
+    window.mainPin.removeEventListener('keydown', pressEnterShow);
     window.form.setAdress();
   };
 
@@ -74,8 +74,8 @@
     document.addEventListener('keydown', pressEscClose);
   };
 
-  mainPin.addEventListener('mouseup', activateInterface);
-  mainPin.addEventListener('keydown', pressEnterShow);
+  window.mainPin.addEventListener('mouseup', activateInterface);
+  window.mainPin.addEventListener('keydown', pressEnterShow);
 
   hideInterface();
 
