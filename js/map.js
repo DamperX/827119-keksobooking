@@ -81,7 +81,6 @@
 
   window.map = {
     activateInterface: activateInterface,
-    tokyoMap: tokyoMap,
     openPopup: openPopup,
     closePopup: closePopup,
     hideInterface: hideInterface

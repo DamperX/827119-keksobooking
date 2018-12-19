@@ -183,5 +183,4 @@
     showForm: showForm,
     hideForm: hideForm
   };
-
 })();
