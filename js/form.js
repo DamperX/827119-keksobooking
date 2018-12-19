@@ -139,7 +139,7 @@
     adForms.reset();
     window.map.hideInterface();
     window.map.closePopup();
-
+    window.resetLoad();
     window.pins.removePinsOnMap();
     window.drag.getDefaultPosition();
     window.mainPin.addEventListener('mouseup', window.map.activateInterface);
