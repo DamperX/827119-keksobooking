@@ -1,9 +1,6 @@
 'use strict';
 
 (function () {
-  var PIN_X = '570';
-  var PIN_Y = '375';
-
   var AccomodationType = {
     'bungalo': {
       min: '0',
@@ -138,12 +135,6 @@
     }
   };
 
-  var setAdressDefault = function () {
-    adressInput.value = PIN_X + ', ' + PIN_Y;
-  };
-
-  setAdressDefault();
-
   var resetForm = function () {
     adForms.reset();
     window.map.hideInterface();
@@ -151,7 +142,7 @@
 
     window.pins.removePinsOnMap();
     window.drag.getDefaultPosition();
-    window.map.mainPin.addEventListener('mouseup', window.map.activateInterface);
+    window.mainPin.addEventListener('mouseup', window.map.activateInterface);
   };
 
   var saveForm = function () {
@@ -159,7 +150,6 @@
     window.utils.insertSuccessMessage();
     synchCapacity();
     synchPrice();
-    setAdress();
   };
 
   adForms.addEventListener('submit', function (evt) {
@@ -170,11 +160,10 @@
   resetBtn.addEventListener('click', function (evt) {
     evt.preventDefault();
     resetForm();
-    setAdress();
   });
 
   var setAdress = function () {
-    adressInput.value = Math.floor(window.map.mainPin.offsetLeft + window.map.mainPinWidth / 2) + ', ' + Math.floor(window.map.mainPin.offsetTop + window.map.mainPinHeight);
+    adressInput.value = (window.mainPin.offsetLeft + Math.round(window.mainPin.offsetWidth / 2)) + ', ' + (window.mainPin.offsetTop + Math.round(window.mainPin.offsetHeight));
   };
 
   var showForm = function () {
@@ -194,5 +183,4 @@
     showForm: showForm,
     hideForm: hideForm
   };
-
 })();
