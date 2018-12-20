@@ -62,8 +62,6 @@
     }
   };
 
-  var popupClose = document.querySelector('.popup__close');
-
   var openPopup = function (evt) {
     if (tokyoMap.contains(tokyoMap.querySelector('.map__pin--active'))) {
       tokyoMap.querySelector('.map__pin--active').classList.remove('map__pin--active');
