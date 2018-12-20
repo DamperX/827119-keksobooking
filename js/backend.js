@@ -38,7 +38,7 @@
     xhr.send();
   };
 
-  var upload = function (onLoad, onError, data) {
+  var upload = function (data, onLoad, onError) {
     var xhr = xhrRequest(onLoad, onError);
     xhr.open('POST', URL_UPLOAD);
     xhr.send(data);
