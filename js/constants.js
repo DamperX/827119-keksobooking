@@ -2,7 +2,7 @@
 
 (function () {
   window.constants = {
-    Keycode: {
+    Keycodes: {
       ESC: 27,
       ENTER: 13
     }

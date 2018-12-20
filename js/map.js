@@ -25,7 +25,7 @@
   };
 
   var pressEscClose = function (evt) {
-    if (evt.keyCode === window.constants.Keycode.ESC) {
+    if (evt.keyCode === window.constants.Keycodes.ESC) {
       closePopup();
     }
   };
@@ -54,7 +54,7 @@
   };
 
   var pressEnterShow = function (evt) {
-    if (evt.keyCode === window.constants.Keycode.ENTER) {
+    if (evt.keyCode === window.constants.Keycodes.ENTER) {
       activateInterface();
     }
   };
