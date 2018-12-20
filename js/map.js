@@ -4,6 +4,7 @@
   var tokyoMap = document.querySelector('.map');
   var mapContainer = document.querySelector('.map__filters-container');
   window.mainPin = tokyoMap.querySelector('.map__pin--main');
+  var popupClose = document.querySelector('.popup__close');
 
   var fadeMap = function () {
     tokyoMap.classList.add('map--faded');
@@ -34,8 +35,8 @@
     if (tokyoMap.contains(tokyoMap.querySelector('.popup'))) {
       tokyoMap.querySelector('.popup').remove('popup');
       tokyoMap.querySelector('.map__pin--active').classList.remove('map__pin--active');
+      popupClose.removeEventListener('click', closePopup);
       document.removeEventListener('keydown', pressEscClose);
-      document.removeEventListener('click', closePopup);
     }
   };
 
@@ -61,6 +62,8 @@
     }
   };
 
+  var popupClose = document.querySelector('.popup__close');
+
   var openPopup = function (evt) {
     if (tokyoMap.contains(tokyoMap.querySelector('.map__pin--active'))) {
       tokyoMap.querySelector('.map__pin--active').classList.remove('map__pin--active');
@@ -71,7 +74,6 @@
     var currentElement = evt.currentTarget;
     currentElement.classList.add('map__pin--active');
     tokyoMap.insertBefore(window.card.createNoticetOnMap(window.realtorsList[currentElement.dataset.index]), mapContainer);
-    var popupClose = document.querySelector('.popup__close');
     popupClose.addEventListener('click', closePopup);
     document.addEventListener('keydown', pressEscClose);
   };
