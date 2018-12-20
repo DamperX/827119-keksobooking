@@ -35,6 +35,7 @@
       tokyoMap.querySelector('.popup').remove('popup');
       tokyoMap.querySelector('.map__pin--active').classList.remove('map__pin--active');
       document.removeEventListener('keydown', pressEscClose);
+      document.removeEventListener('click', closePopup);
     }
   };
 
