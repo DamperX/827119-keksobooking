@@ -4,7 +4,6 @@
   var tokyoMap = document.querySelector('.map');
   var mapContainer = document.querySelector('.map__filters-container');
   window.mainPin = tokyoMap.querySelector('.map__pin--main');
-  var popupClose = document.querySelector('.popup__close');
 
   var fadeMap = function () {
     tokyoMap.classList.add('map--faded');
