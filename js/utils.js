@@ -31,8 +31,8 @@
     var modalError = document.querySelector('.error');
     if (evt.keyCode === window.constants.Keycodes.ESC) {
       indexMain.removeChild(modalError);
+      document.removeEventListener('keydown', closeErrorMessage);
     }
-    document.removeEventListener('keydown', closeErrorMessage);
   };
 
   var insertSuccessMessage = function () {
@@ -50,8 +50,8 @@
     var modalSucces = document.querySelector('.success');
     if (evt.keyCode === window.constants.Keycodes.ESC) {
       indexMain.removeChild(modalSucces);
+      document.removeEventListener('keydown', closeSuccessMessage);
     }
-    document.removeEventListener('keydown', closeSuccessMessage);
   };
 
   var debounce = function (cb) {
