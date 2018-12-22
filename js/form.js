@@ -166,13 +166,13 @@
     adressInput.value = (window.mainPin.offsetLeft + Math.round(window.mainPin.offsetWidth / 2)) + ', ' + (window.mainPin.offsetTop + Math.round(window.mainPin.offsetHeight));
   };
 
-  var showForm = function () {
+  var show = function () {
     switchForm(formFieldsets, 'show');
     switchForm(formSelects, 'show');
     activateForm();
   };
 
-  var hideForm = function () {
+  var hide = function () {
     switchForm(formFieldsets, 'hide');
     switchForm(formSelects, 'hide');
     deactivateForm();
@@ -180,7 +180,7 @@
 
   window.form = {
     setAdress: setAdress,
-    showForm: showForm,
-    hideForm: hideForm
+    show: show,
+    hide: hide
   };
 })();
