@@ -14,39 +14,44 @@
     errorMessage.textContent = message;
 
     indexMain.appendChild(errorElement);
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.constants.Keycodes.ESC) {
-        closeErrorMessage();
-      }
+
+    errorElement.addEventListener('click', function () {
+      indexMain.removeChild(errorElement);
+      document.removeEventListener('keydown', closeErrorMessage);
     });
-    errorElement.addEventListener('click', closeErrorMessage);
-    errorBtn.addEventListener('click', closeErrorMessage);
+
+    errorBtn.addEventListener('click', function () {
+      indexMain.removeChild(errorElement);
+      document.removeEventListener('keydown', closeErrorMessage);
+    });
+    document.addEventListener('keydown', closeErrorMessage);
   };
 
-  var closeErrorMessage = function () {
+  var closeErrorMessage = function (evt) {
     var modalError = document.querySelector('.error');
-    indexMain.removeChild(modalError);
+    if (evt.keyCode === window.constants.Keycodes.ESC) {
+      indexMain.removeChild(modalError);
+    }
     document.removeEventListener('keydown', closeErrorMessage);
-    modalError.removeEventListener('click', closeErrorMessage);
   };
 
   var insertSuccessMessage = function () {
     var success = document.querySelector('#success').content.querySelector('.success');
     var successElement = success.cloneNode(true);
     indexMain.appendChild(successElement);
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.constants.Keycodes.ESC) {
-        closeSuccessMessage();
-      }
+    successElement.addEventListener('click', function () {
+      indexMain.removeChild(successElement);
+      document.removeEventListener('keydown', closeSuccessMessage);
     });
-    successElement.addEventListener('click', closeSuccessMessage);
+    document.addEventListener('keydown', closeSuccessMessage);
   };
 
-  var closeSuccessMessage = function () {
+  var closeSuccessMessage = function (evt) {
     var modalSucces = document.querySelector('.success');
-    indexMain.removeChild(modalSucces);
+    if (evt.keyCode === window.constants.Keycodes.ESC) {
+      indexMain.removeChild(modalSucces);
+    }
     document.removeEventListener('keydown', closeSuccessMessage);
-    modalSucces.removeEventListener('click', closeSuccessMessage);
   };
 
   var debounce = function (cb) {

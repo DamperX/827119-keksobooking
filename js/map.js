@@ -15,13 +15,13 @@
 
   var hideInterface = function () {
     fadeMap();
-    window.form.hideForm();
+    window.form.hide();
     window.form.setAdress();
   };
 
   var showInterface = function () {
     showMap();
-    window.form.showForm();
+    window.form.show();
   };
 
   var pressEscClose = function (evt) {
