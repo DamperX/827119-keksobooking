@@ -18,11 +18,13 @@
     errorElement.addEventListener('click', function () {
       indexMain.removeChild(errorElement);
       document.removeEventListener('keydown', closeErrorMessage);
+      errorElement.removeEventListener('click', closeErrorMessage);
     });
 
     errorBtn.addEventListener('click', function () {
       indexMain.removeChild(errorElement);
       document.removeEventListener('keydown', closeErrorMessage);
+      errorBtn.removeEventListener('click', closeErrorMessage);
     });
     document.addEventListener('keydown', closeErrorMessage);
   };
@@ -42,6 +44,7 @@
     successElement.addEventListener('click', function () {
       indexMain.removeChild(successElement);
       document.removeEventListener('keydown', closeSuccessMessage);
+      successElement.removeEventListener('click', closeSuccessMessage);
     });
     document.addEventListener('keydown', closeSuccessMessage);
   };
