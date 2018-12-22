@@ -19,12 +19,14 @@
       indexMain.removeChild(errorElement);
       document.removeEventListener('keydown', closeErrorMessage);
       errorElement.removeEventListener('click', closeErrorMessage);
+      errorBtn.removeEventListener('click', closeErrorMessage);
     });
 
     errorBtn.addEventListener('click', function () {
       indexMain.removeChild(errorElement);
       document.removeEventListener('keydown', closeErrorMessage);
       errorBtn.removeEventListener('click', closeErrorMessage);
+      errorElement.removeEventListener('click', closeErrorMessage);
     });
     document.addEventListener('keydown', closeErrorMessage);
   };
